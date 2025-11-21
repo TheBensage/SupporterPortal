@@ -440,5 +440,9 @@ appsettings-schema.*.json
 # Media files
 */wwwroot/media/
 
-#Dev/Local App Settings
+# Dev/Local App Settings
 */appsettings.Development*
+
+#Smidge Cache
+
+*/Smidge/Cache/
