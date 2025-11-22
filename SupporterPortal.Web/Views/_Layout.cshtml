@@ -1,0 +1,32 @@
+﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+    SiteSettings? siteSettings = Model.Root<ContentModels.SiteSettings>();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Title</title>
+</head>
+<body>
+    <header>
+    @if (siteSettings != null)
+    {
+        @await Html.PartialAsync("_Navigation", siteSettings)
+    }
+    </header>
+
+    <main class="container mt-4">
+        @RenderBody()
+    </main>
+
+    <footer class="bg-light text-center py-4 mt-5">
+        &copy; @DateTime.Now.Year
+    </footer>
+
+    <script type="module" src="~/dist/js/main.js"></script>
+</body>
+</html>
