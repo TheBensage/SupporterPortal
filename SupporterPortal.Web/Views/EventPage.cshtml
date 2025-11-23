@@ -1,0 +1,12 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.EventPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "_Layout.cshtml";
+}
+
+@await Html.PartialAsync("_Hero", Model.PageHero)
+
+@Html.GetBlockGridHtml(Model.PageGrid);
+
+@await Html.PartialAsync("_NewsLetterForm")

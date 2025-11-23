@@ -56,5 +56,29 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("mainNavigationItems")]
 		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.Link> MainNavigationItems => this.Value<global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.Link>>(_publishedValueFallback, "mainNavigationItems");
+
+		///<summary>
+		/// Site description: The description for this site as it appears in share links
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("siteDescription")]
+		public virtual string SiteDescription => this.Value<string>(_publishedValueFallback, "siteDescription");
+
+		///<summary>
+		/// Site image: The image to display for this site in share links. This will be used as the fallback image for share links and cards in the site
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("siteImage")]
+		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops SiteImage => this.Value<global::Umbraco.Cms.Core.Models.MediaWithCrops>(_publishedValueFallback, "siteImage");
+
+		///<summary>
+		/// Site title: The title for this site as it appears in browser tabs
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("siteTitle")]
+		public virtual string SiteTitle => this.Value<string>(_publishedValueFallback, "siteTitle");
 	}
 }

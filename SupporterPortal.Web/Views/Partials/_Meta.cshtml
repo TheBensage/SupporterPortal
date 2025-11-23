@@ -1,0 +1,30 @@
+﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>
+
+@{
+    var page = Model as ContentModels.IBasePage;
+
+    var siteSettings = Model.Root() as ContentModels.SiteSettings;
+
+    string siteTitle = siteSettings?.SiteTitle ?? "";
+    string pageTitle = page?.Title;
+    string metaTitle = !string.IsNullOrWhiteSpace(pageTitle) ? $"{siteTitle} - {pageTitle}" : siteTitle;
+
+    string metaDescription = !string.IsNullOrWhiteSpace(page?.Description)
+        ? page.Description
+        : siteSettings?.SiteDescription ?? "";
+
+    var metaImage = page?.Image ?? siteSettings?.SiteImage;
+    string metaImageUrl = metaImage?.GetCropUrl() ?? "";
+}
+
+<title>@metaTitle</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="@metaDescription" />
+<meta property="og:description" content="@metaDescription" />
+<meta property="og:title" content="@metaTitle" />
+<meta property="og:image" content="@metaImageUrl" />
+<meta name="twitter:image" content="@metaImageUrl" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />

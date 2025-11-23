@@ -8,8 +8,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>Title</title>
+    @await Html.PartialAsync("_Meta", Model)
+    <link rel="stylesheet" href="~/dist/css/main.css">
 </head>
 <body>
     <header>

@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const observer = new IntersectionObserver(
     (entries, obs) => {
-      entries.forEach(async (entry) => {
+      entries.forEach(async (entry, index) => {
         if (!entry.isIntersecting) return;
 
         const el = entry.target as HTMLElement;
@@ -30,7 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!name || !componentMap[name]) return;
         const module = await componentMap[name]();
         module.default(el);
-
+        setTimeout(() => {
+          el.classList.add("is-initialized");
+        }, index * 150);
         obs.unobserve(el);
       });
     },

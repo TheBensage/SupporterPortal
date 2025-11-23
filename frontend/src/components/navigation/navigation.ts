@@ -1,5 +1,4 @@
 import { Collapse } from "bootstrap";
-import "./navigation.scss";
 
 export default function Navigation(el: HTMLElement) {
   console.log("Navigation Initialised");

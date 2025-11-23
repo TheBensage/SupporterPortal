@@ -1,29 +1,44 @@
 ﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
+@using Umbraco.Cms.Core.Models
 @model ContentModels.SiteSettings
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top" data-component="navigation">
-    <div class="container">
-        <!-- Brand -->
-        <a class="navbar-brand fw-bold fs-4" href="/">@Model.Name</a>
+@if(Model.MainNavigationItems != null) {
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top" data-component="navigation">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="/">@Model.SiteTitle</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto align-items-center">
 
-        <!-- Toggler -->
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+                    @foreach (Link? navItem in Model.MainNavigationItems)
+                    {
 
-        <!-- Collapsible menu -->
-        <div class="collapse navbar-collapse" id="mainNav">
-            <ul class="navbar-nav ms-auto align-items-lg-center">
-                @foreach (var navItem in Model?.MainNavigationItems)
-                {
-                    <li class="nav-item mx-2">
-                        <a class="nav-link text-dark fw-medium px-3 py-2 rounded" href="@navItem.Url">
-                            @navItem.Name
+                        <li class="nav-item mx-2 mb-2">
+                            <a class="nav-link text-dark fw-medium px-3 py-2 rounded-hover" href="@navItem.Url">
+                                @navItem.Name
+                            </a>
+                        </li>
+                    }
+
+                    <li class="nav-item mx-2 mb-2">
+                        @if (User?.Identity?.IsAuthenticated == true)
+                        {
+                            <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="/logout">
+                                Log out
+                            </a>
+                        }
+                        else
+                    {
+                        <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="/login">
+                            Log in
                         </a>
-                    </li>
-                }
+                    }
+                </li>
             </ul>
         </div>
     </div>
 </nav>
+}

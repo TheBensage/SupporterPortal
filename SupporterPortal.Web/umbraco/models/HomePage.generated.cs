@@ -20,7 +20,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 {
 	/// <summary>Home Page</summary>
 	[PublishedModel("homePage")]
-	public partial class HomePage : PublishedContentModel, IBasePage
+	public partial class HomePage : PublishedContentModel, IBasePage, IPageContent
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
@@ -58,11 +58,35 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string Description => global::Umbraco.Cms.Web.Common.PublishedModels.BasePage.GetDescription(this, _publishedValueFallback);
 
 		///<summary>
+		/// Image: Select an image for this page.  This will be used in cards and share links.  If no image is provided, the default image from site settings will be used
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("image")]
+		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops Image => global::Umbraco.Cms.Web.Common.PublishedModels.BasePage.GetImage(this, _publishedValueFallback);
+
+		///<summary>
 		/// Title: Page title
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("title")]
 		public virtual string Title => global::Umbraco.Cms.Web.Common.PublishedModels.BasePage.GetTitle(this, _publishedValueFallback);
+
+		///<summary>
+		/// Page Grid: Add elements to the page grid as required
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("pageGrid")]
+		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockGridModel PageGrid => global::Umbraco.Cms.Web.Common.PublishedModels.PageContent.GetPageGrid(this, _publishedValueFallback);
+
+		///<summary>
+		/// Page Hero: Add a single hero, or up to 5 hero slides for this page heading
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("pageHero")]
+		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockListModel PageHero => global::Umbraco.Cms.Web.Common.PublishedModels.PageContent.GetPageHero(this, _publishedValueFallback);
 	}
 }

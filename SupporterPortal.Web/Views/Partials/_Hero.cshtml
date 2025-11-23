@@ -1,0 +1,79 @@
+﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListModel>
+
+@{
+    var slides = Model?
+        .Select(x => x.Content as ContentModels.HeroImageSlide)
+        .Where(x => x != null)
+        .ToList() ?? new List<ContentModels.HeroImageSlide>();
+
+    if (!slides.Any()) return;
+
+    bool isMultiple = slides.Count > 1;
+    string carouselId = "hero-carousel-" + Guid.NewGuid().ToString("N");
+}
+
+<div class="hero-component" data-component="hero">
+    <div id="@carouselId" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
+
+        @if (isMultiple)
+        {
+            <div class="carousel-indicators">
+                @for (int i = 0; i < slides.Count; i++)
+                {
+                    <button type="button"
+                            data-bs-target="#@carouselId"
+                            data-bs-slide-to="@i"
+                            class="@(i == 0 ? "active" : "")"
+                            aria-label="Slide @(i + 1)"
+                            aria-current="@(i == 0 ? "true" : "false")">
+                    </button>
+                }
+            </div>
+        }
+
+        <div class="carousel-inner">
+            @for (int i = 0; i < slides.Count; i++)
+            {
+                var slide = slides[i];
+                var textClass = slide.IsDark ? "text-dark" : "text-white";
+                <div class="carousel-item @(i == 0 ? "active" : "") position-relative">
+                    <img src="@slide.BackgroundImage?.Url()"
+                         class="d-block w-100 hero-img"
+                         alt="@slide.Title" />
+
+                    @if (!slide.IsDark)
+                    {
+                        <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+                    }
+
+                    <div class="carousel-caption d-flex flex-column justify-content-center align-items-center px-3 px-md-5">
+                        <div class="caption-inner @(textClass)">
+                            <h1 class="fw-bold mb-3">@slide.Title</h1>
+                            @if (!string.IsNullOrWhiteSpace(slide.Description))
+                            {
+                                <p class="lead mb-3">@slide.Description</p>
+                            }
+                            @if (slide.Cta != null)
+                            {
+                                <a href="@slide.Cta.Url" class="btn btn-primary btn-lg">@slide.Cta.Name</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (isMultiple)
+        {
+            <button class="carousel-control-prev" type="button" data-bs-target="#@carouselId" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#@carouselId" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        }
+    </div>
+</div>

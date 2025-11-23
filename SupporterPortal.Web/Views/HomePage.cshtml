@@ -1,8 +1,14 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.HomePage>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.HomePage>
+
 @{
-	Layout = null;
+	Layout = "_Layout.cshtml";
 }
 
-<h1>Hello World</h1>
+
+@await Html.PartialAsync("_Hero", Model.PageHero)
+
+@Html.GetBlockGridHtml(Model.PageGrid)
+
+@await Html.PartialAsync("_NewsLetterForm")

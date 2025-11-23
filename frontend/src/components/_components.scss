@@ -1,0 +1,9 @@
+[data-component] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+[data-component].is-initialized {
+  opacity: 1;
+  transform: translateY(0);
+}

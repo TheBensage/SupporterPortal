@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using SupporterPortal.Application;
 using SupporterPortal.Infrastructure;
 
@@ -11,9 +13,42 @@ builder.CreateUmbracoBuilder()
     .Build();
 
 builder.Services.AddApplication(builder.Configuration);
+
 builder.Services.AddInfrastructure(builder.Configuration);
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+})
+.AddCookie()
+.AddOpenIdConnect("Auth0", options =>
+{
+    options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
+    options.ClientId = builder.Configuration["Auth0:ClientId"];
+    options.ClientSecret = builder.Configuration["Auth0:ClientSecret"];
+    options.ResponseType = "code";
+
+    options.Scope.Clear();
+    options.Scope.Add("openid");
+    options.Scope.Add("profile");
+    options.Scope.Add("email");
+
+    options.CallbackPath = "/signin-auth0";
+    options.ClaimsIssuer = "Auth0";
+    options.SignedOutCallbackPath = "/signout-callback-oidc";
+    options.TokenValidationParameters.NameClaimType = "name";
+
+    options.SaveTokens = true;
+});
+
+
+
 WebApplication app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 await app.BootUmbracoAsync();
 
@@ -31,4 +66,7 @@ app.UseUmbraco()
         u.UseWebsiteEndpoints();
     });
 
+
 await app.RunAsync();
+
+

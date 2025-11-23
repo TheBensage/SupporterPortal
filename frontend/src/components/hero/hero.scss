@@ -1,1 +1,31 @@
+.hero-img {
+  object-fit: cover;
+  width: 100%;
+  /* Use a fixed vh height for hero */
+  height: 70vh;
+  min-height: 300px; /* fallback for small viewports */
+}
 
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.carousel-caption {
+  z-index: 2;
+  /* Make sure caption container does not overflow horizontally */
+  max-width: 90%;
+}
+
+.caption-inner {
+  text-align: center;
+}
+
+.carousel-caption p.lead {
+  font-size: 1rem;
+}
