@@ -26,13 +26,13 @@
                     <li class="nav-item mx-2 mb-2">
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
-                            <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="/logout">
+                            <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="/api/logout">
                                 Log out
                             </a>
                         }
                         else
                     {
-                        <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="/login">
+                        <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="/api/login">
                             Log in
                         </a>
                     }

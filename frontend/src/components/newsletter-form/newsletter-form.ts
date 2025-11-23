@@ -23,7 +23,7 @@ export default function NewsletterForm(el: HTMLElement) {
     const formData = new FormData(form);
 
     try {
-      const res = await fetch("/umbraco/surface/newsletterform/submit", {
+      const res = await fetch("/api/subscribe", {
         method: "POST",
         body: formData,
       });

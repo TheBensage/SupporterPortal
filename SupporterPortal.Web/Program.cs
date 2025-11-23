@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using SupporterPortal.Application;
+using SupporterPortal.Application.Services;
 using SupporterPortal.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -42,6 +43,8 @@ builder.Services.AddAuthentication(options =>
 
     options.SaveTokens = true;
 });
+
+builder.Services.AddScoped<ISiteSearchService, ExamineSiteSearchService>();
 
 
 

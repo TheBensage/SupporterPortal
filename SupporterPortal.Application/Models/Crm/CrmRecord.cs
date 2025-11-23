@@ -1,0 +1,8 @@
+﻿namespace SupporterPortal.Application.Models.Crm;
+
+public record class CrmRecord
+{
+    public Guid Id { get; set; }
+    public required string Name { get; set; }
+    public required string Email { get; set; }
+}

@@ -6,13 +6,13 @@ namespace SupporterPortal.Web.Controllers;
 
 public class AccountController : Controller
 {
-    [HttpGet("/login")]
+    [HttpGet("/api/login")]
     public IActionResult Login(string returnUrl = "/")
     {
         return Challenge(new AuthenticationProperties { RedirectUri = returnUrl }, "Auth0");
     }
 
-    [HttpGet("/logout")]
+    [HttpGet("/api/logout")]
     public IActionResult Logout()
     {
         return SignOut(
