@@ -20,31 +20,38 @@ public class ExamineSiteSearchService : ISiteSearchService
 
     public SiteSearchResponse GetPages(SiteSearchRequest request)
     {
-        IEnumerable<string>? ids = Array.Empty<string>();
+
+        IEnumerable<string> ids = Array.Empty<string>();
 
         if (_examineManager.TryGetIndex(Constants.UmbracoIndexes.ExternalIndexName, out IIndex? index))
         {
             IQuery query = index.Searcher.CreateQuery(IndexTypes.Content);
 
-            IBooleanOperation? boolQuery = (IBooleanOperation)(request.ContentTypeAliases != null && request.ContentTypeAliases.Any()
-                ? request.ContentTypeAliases.Count() == 1
-                    ? query.NodeTypeAlias(request.ContentTypeAliases.First())
-                    : query.GroupedOr(["__NodeTypeAlias"], request.ContentTypeAliases.ToArray())
-                : query.All());
+            // Filter out null/empty content type aliases
+            string[] contentTypes = request.ContentTypeAliases?
+                                        .Where(x => !string.IsNullOrWhiteSpace(x))
+                                        .ToArray()
+                                    ?? Array.Empty<string>();
 
-            boolQuery ??= query.All() as IBooleanOperation;
+            IBooleanOperation boolQuery = contentTypes.Length switch
+            {
+                0 => query.All() as IBooleanOperation ?? throw new InvalidOperationException("Query must be boolean"),
+                1 => query.NodeTypeAlias(contentTypes[0]),
+                _ => query.GroupedOr(new[] { "__NodeTypeAlias" }, contentTypes)
+            };
 
             if (!string.IsNullOrWhiteSpace(request.SearchTerm))
             {
                 string term = $"*{request.SearchTerm}*";
 
-                boolQuery = boolQuery?.And()
-                                      .ManagedQuery(term, ["searchTitle", "searchSummary", "nodeName"]);
+                boolQuery = boolQuery.And()
+                                     .ManagedQuery(term, new[] { "searchTitle", "searchSummary", "nodeName" });
             }
 
-            ids = boolQuery?.Execute()?.Select(x => x.Id);
-
+            ids = boolQuery.Execute()?.Select(x => x.Id) ?? Array.Empty<string>();
         }
+
+
 
         IUmbracoContext umbracoContext = _ctx.GetRequiredUmbracoContext();
         List<SiteSearchResult> items = new List<SiteSearchResult>();
