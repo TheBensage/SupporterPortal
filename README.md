@@ -44,11 +44,11 @@ SupporterPortal/
 - Initialized on viewport visibility using `IntersectionObserver`  
 - Staggered animations via `.is-initialized`  
 
-## Backend & Umbraco
-- Umbraco 13 bootstrapped with backoffice, website, delivery API  
+## Backend
+- Umbraco 13 
 - Cookie + OpenID Connect authentication (Auth0)  
 - Examine-based search  
-- uSync: first-run prompt to install and import content; config-driven for multi-environment setups  
+- uSync
 
 ### Layout & Partials
 - `_Layout.cshtml` loads `main.css` and `main.js`  
