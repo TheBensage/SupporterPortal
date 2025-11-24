@@ -1,3 +1,12 @@
-@use "./_bootstrap-core";
-@use "./_variables";
-@use "./components/_components";
+@use "bootstrap" with (
+  $primary: #1f4e79,
+  $secondary: #6c757d,
+  $success: #2a9d8f,
+  $info: #6096ba,
+  $warning: #e09f3e,
+  $danger: #d62828,
+  $light: #f8f9fa,
+  $dark: #212529
+);
+
+@use "./components/components";

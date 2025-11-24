@@ -22,8 +22,9 @@ public class ExamineSiteSearchService : ISiteSearchService
 
     public SiteSearchResponse GetPages(SiteSearchRequest request)
     {
-        string[] excludeContentTypes = new[] { "siteSettings" };
-        IEnumerable<(string Id, float Score)> allMatches = Array.Empty<(string, float)>();
+        string[] excludeContentTypes = ["siteSettings", "homePage"];
+
+        IEnumerable<(string Id, float Score)> allMatches = [];
 
         if (_examineManager.TryGetIndex(Constants.UmbracoIndexes.ExternalIndexName, out IIndex? index))
         {

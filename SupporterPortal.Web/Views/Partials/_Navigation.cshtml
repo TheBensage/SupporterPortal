@@ -15,9 +15,12 @@
 
                     @foreach (Link? navItem in Model.MainNavigationItems)
                     {
+                        string currentPath = ViewContext.HttpContext.Request.Path.Value?.ToLower() ?? string.Empty;
+                        string? navSegment = navItem.Url?.TrimEnd('/').ToLower();
+                        bool isActive = !string.IsNullOrEmpty(navSegment) && currentPath.Contains(navSegment);
 
                         <li class="nav-item mx-2 mb-2">
-                            <a class="nav-link text-dark fw-medium px-3 py-2 rounded-hover" href="@navItem.Url">
+                            <a class="nav-link fw-medium px-3 py-2 rounded-hover  @(isActive ? "active" : "")" href="@navItem.Url">
                                 @navItem.Name
                             </a>
                         </li>
