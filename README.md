@@ -9,6 +9,9 @@ Prototype site built for demonstrating **Umbraco 13**, **.NET 8**, and a modular
 
 <img width="2880" height="1704" alt="image" src="https://github.com/user-attachments/assets/dd700037-9029-4715-ae34-909bf5cf6931" />
 
+<img width="2880" height="1704" alt="image" src="https://github.com/user-attachments/assets/00be664f-02e5-4ccc-9baa-de2003311d06" />
+
+
 ## Tech Stack
 - **Backend:** .NET 8, Umbraco 13  
 - **Frontend:** Vite, TypeScript, SCSS, Bootstrap  
