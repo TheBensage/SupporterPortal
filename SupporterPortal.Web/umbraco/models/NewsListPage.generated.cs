@@ -66,6 +66,37 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops Image => global::Umbraco.Cms.Web.Common.PublishedModels.BasePage.GetImage(this, _publishedValueFallback);
 
 		///<summary>
+		/// Hide from results?: Hide this page from search results
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[ImplementPropertyType("isSearchHidden")]
+		public virtual bool IsSearchHidden => global::Umbraco.Cms.Web.Common.PublishedModels.BasePage.GetIsSearchHidden(this, _publishedValueFallback);
+
+		///<summary>
+		/// Search Image: The image to display for this page when used in a Search Listing component.  If no image is provided, the page image will be used
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("searchImage")]
+		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops SearchImage => global::Umbraco.Cms.Web.Common.PublishedModels.BasePage.GetSearchImage(this, _publishedValueFallback);
+
+		///<summary>
+		/// Search Summary: The search summary to display for this page when used in a Search Listing component.  If no value is provided, the page description will be used
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("searchSummary")]
+		public virtual string SearchSummary => global::Umbraco.Cms.Web.Common.PublishedModels.BasePage.GetSearchSummary(this, _publishedValueFallback);
+
+		///<summary>
+		/// Search Title: The title to display for this page when used in a Search Listing component.  If no value is provided, the page title will be used
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("searchTitle")]
+		public virtual string SearchTitle => global::Umbraco.Cms.Web.Common.PublishedModels.BasePage.GetSearchTitle(this, _publishedValueFallback);
+
+		///<summary>
 		/// Title: Page title
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]

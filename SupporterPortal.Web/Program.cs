@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using SupporterPortal.Application;
 using SupporterPortal.Application.Services;
 using SupporterPortal.Infrastructure;
+using SupporterPortal.Web.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

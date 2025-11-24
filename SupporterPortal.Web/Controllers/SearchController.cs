@@ -18,14 +18,20 @@ public class SiteSearchController : Controller
         [FromQuery] string[]? contentTypes,
         [FromQuery] string searchTerm = "",
         [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 6)
+        [FromQuery] int pageSize = 6,
+        [FromQuery] string? orderBy = null,
+        [FromQuery] int? maxSize = null)
     {
         SiteSearchRequest request = new()
         {
             SearchTerm = searchTerm,
-            ContentTypeAliases = contentTypes?.ToList(),
+            ContentTypeAliases = contentTypes?.ToList() ?? new List<string>(),
             Page = page,
-            PageSize = pageSize
+            PageSize = pageSize,
+            OrderBy = orderBy,
+            MaxSize = maxSize.HasValue && maxSize > 0
+                ? maxSize.Value
+                : null
         };
 
         SiteSearchResponse result = _siteSearchService.GetPages(request);

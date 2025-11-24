@@ -1,0 +1,33 @@
+.search-loading {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.search-result-item {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.5s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-result-item .card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.search-result-item .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: #fff;
+}

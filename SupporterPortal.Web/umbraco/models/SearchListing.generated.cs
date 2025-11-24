@@ -50,6 +50,36 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
+		/// Content Types: Select Content Types to display
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("contentTypes")]
+		public virtual global::System.Collections.Generic.IEnumerable<string> ContentTypes => this.Value<global::System.Collections.Generic.IEnumerable<string>>(_publishedValueFallback, "contentTypes");
+
+		///<summary>
+		/// Max Size: The maximum amount of results to return for this listing
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[ImplementPropertyType("maxSize")]
+		public virtual int MaxSize => this.Value<int>(_publishedValueFallback, "maxSize");
+
+		///<summary>
+		/// Order By: Order results by selecting one of the below options.  The default order will be the search score
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("orderBy")]
+		public virtual string OrderBy => this.Value<string>(_publishedValueFallback, "orderBy");
+
+		///<summary>
+		/// Page Size: The amount of results to show in a single response
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[ImplementPropertyType("pageSize")]
+		public virtual int PageSize => this.Value<int>(_publishedValueFallback, "pageSize");
+
+		///<summary>
 		/// Title: The title for this search listing
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]

@@ -6,7 +6,5 @@
 }
 
 @await Html.PartialAsync("_Hero", Model.PageHero)
-
-@Html.GetBlockGridHtml(Model.PageGrid);
-
+@Html.GetBlockGridHtml(Model.PageGrid)
 @await Html.PartialAsync("_NewsLetterForm")

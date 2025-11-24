@@ -13,8 +13,42 @@
     string carouselId = "hero-carousel-" + Guid.NewGuid().ToString("N");
 }
 
-<div class="hero-component" data-component="hero">
-    <div id="@carouselId" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
+<div class="hero-component pb-2" data-component="hero">
+    <div id="@carouselId" class="carousel slide carousel-dark" data-bs-ride="carousel" data-bs-interval="6000">
+
+        <div class="carousel-inner pb-2">
+            @for (int i = 0; i < slides.Count; i++)
+            {
+                var slide = slides[i];
+
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <div class="container-fluid pb-5 d-flex align-items-center">
+                        <div class="row align-items-center">
+
+                            <div class="col-12 ps-0 pe-2 col-md-6 text-start">
+                                <h1>@slide.Title</h1>
+                                @if (!string.IsNullOrWhiteSpace(slide.Description))
+                                {
+                                    <p class="lead">@slide.Description</p>
+                                }
+                                @if (slide.Cta != null)
+                                {
+                                    <a href="@slide.Cta.Url" class="btn btn-primary btn-lg">@slide.Cta.Name</a>
+                                }
+                            </div>
+
+                            @if (slide.BackgroundImage != null)
+                            {
+                                <div class="col-12 px-0 col-md-6 d-none d-md-block text-end">
+                                    <img src="@slide.BackgroundImage.Url()" alt="@slide.Title" class="img-fluid rounded shadow-sm">
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
 
         @if (isMultiple)
         {
@@ -30,50 +64,6 @@
                     </button>
                 }
             </div>
-        }
-
-        <div class="carousel-inner">
-            @for (int i = 0; i < slides.Count; i++)
-            {
-                var slide = slides[i];
-                var textClass = slide.IsDark ? "text-dark" : "text-white";
-                <div class="carousel-item @(i == 0 ? "active" : "") position-relative">
-                    <img src="@slide.BackgroundImage?.Url()"
-                         class="d-block w-100 hero-img"
-                         alt="@slide.Title" />
-
-                    @if (!slide.IsDark)
-                    {
-                        <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
-                    }
-
-                    <div class="carousel-caption d-flex flex-column justify-content-center align-items-center px-3 px-md-5">
-                        <div class="caption-inner @(textClass)">
-                            <h1 class="fw-bold mb-3">@slide.Title</h1>
-                            @if (!string.IsNullOrWhiteSpace(slide.Description))
-                            {
-                                <p class="lead mb-3">@slide.Description</p>
-                            }
-                            @if (slide.Cta != null)
-                            {
-                                <a href="@slide.Cta.Url" class="btn btn-primary btn-lg">@slide.Cta.Name</a>
-                            }
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-
-        @if (isMultiple)
-        {
-            <button class="carousel-control-prev" type="button" data-bs-target="#@carouselId" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#@carouselId" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
         }
     </div>
 </div>
