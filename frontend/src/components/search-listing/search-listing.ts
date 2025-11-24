@@ -27,29 +27,33 @@ export default function SearchListing(el: HTMLElement) {
 
   let currentPage = 1;
 
+  // Wrapper for results and spinner
+  const resultsWrapper = document.createElement("div");
+  resultsWrapper.classList.add("position-relative", "d-flex", "flex-column");
+  container.appendChild(resultsWrapper);
+
   const resultsContainer = document.createElement("div");
   resultsContainer.classList.add("row", "g-3", "search-results-container");
-  container.appendChild(resultsContainer);
+  resultsWrapper.appendChild(resultsContainer);
 
   const paginationContainer = document.createElement("nav");
   paginationContainer.classList.add("mt-3");
   container.appendChild(paginationContainer);
 
   const loadingIndicator = document.createElement("div");
-  loadingIndicator.className = "search-loading";
-  loadingIndicator.innerHTML = `<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>`;
-  container.appendChild(loadingIndicator);
+  loadingIndicator.className =
+    "search-loading position-absolute top-50 start-50 translate-middle d-flex";
+  loadingIndicator.innerHTML = `
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  `;
+  resultsWrapper.appendChild(loadingIndicator);
 
   async function loadPage(page: number) {
     currentPage = page;
 
-    // Preserve current height to prevent jump
-    const currentHeight = resultsContainer.offsetHeight;
-    resultsContainer.style.minHeight = `${currentHeight}px`;
-
-    // Clear old results and show spinner
-    resultsContainer.innerHTML = "";
-    loadingIndicator.style.display = "flex";
+    loadingIndicator.classList.remove("d-none");
 
     const params = new URLSearchParams({
       searchTerm,
@@ -57,68 +61,74 @@ export default function SearchListing(el: HTMLElement) {
       pageSize: pageSize.toString(),
       contentTypes: contentTypes.join(","),
     });
-
     if (orderBy) params.set("orderBy", orderBy);
     if (maxSize > 0) params.set("maxSize", maxSize.toString());
 
     try {
       const res = await fetch(`/api/search?${params}`);
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data: SiteSearchResponse = await res.json();
 
-      // Render results
-      const fragment = document.createDocumentFragment();
+      resultsContainer.innerHTML = "";
 
-      data.results.forEach((item, idx) => {
-        const col = document.createElement("div");
-        col.className = "col-md-4 search-result-item";
-        col.style.animationDelay = `${idx * 100}ms`;
+      if (!data.results.length) {
+        resultsContainer.innerHTML = `<div class="col-12"><p>No results found.</p></div>`;
+      } else {
+        const fragment = document.createDocumentFragment();
+        data.results.forEach((item, idx) => {
+          const col = document.createElement("div");
+          col.className = "col-md-4 search-result-item";
+          col.style.animationDelay = `${idx * 100}ms`;
 
-        const card = document.createElement("div");
-        card.className = "card h-100 shadow-sm";
+          const card = document.createElement("div");
+          card.className = "card h-100 shadow-sm";
 
-        if (item.imageUrl) {
-          const img = document.createElement("img");
-          img.className = "card-img-top";
-          img.src = item.imageUrl;
-          img.alt = item.title;
-          card.appendChild(img);
-        }
+          if (item.imageUrl) {
+            const img = document.createElement("img");
+            img.className = "card-img-top";
+            img.src = item.imageUrl;
+            img.alt = item.title;
+            card.appendChild(img);
+          }
 
-        const body = document.createElement("div");
-        body.className = "card-body";
+          const body = document.createElement("div");
+          body.className = "card-body";
 
-        const title = document.createElement("h5");
-        title.className = "card-title";
-        title.textContent = item.title;
+          const title = document.createElement("h5");
+          title.className = "card-title";
+          title.textContent = item.title;
 
-        const summary = document.createElement("p");
-        summary.className = "card-text";
-        summary.textContent = item.summary;
+          const summary = document.createElement("p");
+          summary.className = "card-text";
+          summary.textContent = item.summary;
 
-        const link = document.createElement("a");
-        link.className = "btn btn-primary";
-        link.href = item.url;
-        link.textContent = "Read more";
+          const link = document.createElement("a");
+          link.className = "btn btn-primary";
+          link.href = item.url;
+          link.textContent = "Read more";
 
-        body.append(title, summary, link);
-        card.appendChild(body);
-        col.appendChild(card);
-        fragment.appendChild(col);
-      });
+          body.append(title, summary, link);
+          card.appendChild(body);
+          col.appendChild(card);
+          fragment.appendChild(col);
+        });
 
-      resultsContainer.appendChild(fragment);
+        resultsContainer.appendChild(fragment);
+      }
 
       renderPagination(data);
+    } catch (err) {
+      console.error("Error loading search results:", err);
+      resultsContainer.innerHTML = `<div class="col-12"><p class="text-danger">Failed to load results.</p></div>`;
+      paginationContainer.innerHTML = "";
     } finally {
-      loadingIndicator.style.display = "none";
-      resultsContainer.style.minHeight = "";
+      loadingIndicator.classList.add("d-none");
     }
   }
 
   function renderPagination(data: SiteSearchResponse) {
     const totalPages = Math.ceil(data.totalCount / data.pageSize);
     paginationContainer.innerHTML = "";
-
     if (totalPages <= 1) return;
 
     const ul = document.createElement("ul");
