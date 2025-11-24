@@ -11,6 +11,7 @@
   "author": "",
   "license": "MIT",
   "description": "",
+  "type": "module",
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
     "@types/node": "^24.10.1",

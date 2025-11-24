@@ -15,6 +15,14 @@ function getAllEntries() {
 }
 
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        quietDeps: true,
+        silenceDeprecations: ["global-builtin", "color-functions"],
+      },
+    },
+  },
   base: "/dist/",
   root: path.resolve(__dirname, "src"),
   build: {
