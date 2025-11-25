@@ -1,5 +1,20 @@
 ﻿@using SupporterPortal.Web.ViewModels.Shared
+@using System.Security.Claims
 @model NewsLetterFormViewModel
+
+@{
+    bool isAuthenticated = User?.Identity?.IsAuthenticated == true;
+    string? claimName = isAuthenticated
+        ? (User?.FindFirst(ClaimTypes.Name)?.Value
+           ?? User?.FindFirst("name")?.Value
+           ?? User?.Identity?.Name)
+        : null;
+
+    string? claimEmail = isAuthenticated
+        ? (User?.FindFirst(ClaimTypes.Email)?.Value
+           ?? User?.FindFirst("email")?.Value)
+        : null;
+}
 
 
 <section class="newsletter-section py-5" data-component="newsletter-form" data-error-text="@Model.ErrorText">
@@ -18,13 +33,13 @@
 
                         <div class="mb-3 js-form-field">
                             <label for="Name" class="form-label">@Model.NameLabel</label>
-                            <input type="text" id="Name" placeholder="@Model.NamePlaceholder" name="Name" class="form-control form-control-lg" required>
+                            <input type="text" id="Name" value="@(claimName ?? "")" placeholder="@Model.NamePlaceholder" name="Name" class="form-control form-control-lg" required>
                             <div class="invalid-feedback"></div>
                         </div>
 
                         <div class="mb-3 js-form-field">
                             <label for="Email" class="form-label">@Model.EmailLabel</label>
-                            <input type="email" id="Email" placeholder="@Model.EmailPlaceholder" name="Email" class="form-control form-control-lg" required>
+                            <input type="email" id="Email" value="@(claimEmail ?? "")" placeholder="@Model.EmailPlaceholder" name="Email" class="form-control form-control-lg" required>
                             <div class="invalid-feedback"></div>
                         </div>
 
