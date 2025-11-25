@@ -1,8 +1,10 @@
-﻿using Examine;
+﻿using System.Web;
+using Examine;
 using Examine.Search;
 using SupporterPortal.Application.Models.SiteSearch;
 using SupporterPortal.Application.Services;
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Infrastructure.Examine;
@@ -76,7 +78,7 @@ public class ExamineSiteSearchService : ISiteSearchService
 
         IPublishedContent? root = umbracoContext.Content?.GetAtRoot().FirstOrDefault();
         IPublishedContent? siteSettings = root?.DescendantsOrSelf("siteSettings").FirstOrDefault();
-        fallbackImageUrl = siteSettings?.Value<IPublishedContent?>("siteImage")?.Url();
+        fallbackImageUrl = siteSettings?.Value<MediaWithCrops?>("siteImage")?.GetCropUrl("card");
         fallBackLinkText = siteSettings?.Value<string>("searchDefaultLinkText") ?? "View";
 
         foreach ((string id, float score) in pageMatches)
@@ -94,7 +96,7 @@ public class ExamineSiteSearchService : ISiteSearchService
                 Url = content.Url(),
                 ContentType = content.ContentType.Alias,
                 Date = MapContentDate(content),
-                ImageUrl = content.Value<IPublishedContent?>("searchImage")?.Url() ?? fallbackImageUrl,
+                ImageUrl = HttpUtility.HtmlEncode(content.Value<MediaWithCrops?>("searchImage")?.GetCropUrl(cropAlias: "card", useCropDimensions: true) ?? fallbackImageUrl),
                 LinkText = GetFallbackString(content, "searchLinkText", fallBackLinkText),
                 Score = score
             });
