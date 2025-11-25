@@ -23,7 +23,12 @@ builder.Services.AddAuthentication(options =>
     options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
 })
-.AddCookie()
+.AddCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.Lax;
+})
 .AddOpenIdConnect("Auth0", options =>
 {
     options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
@@ -40,6 +45,8 @@ builder.Services.AddAuthentication(options =>
     options.ClaimsIssuer = "Auth0";
     options.SignedOutCallbackPath = "/signout-callback-oidc";
     options.TokenValidationParameters.NameClaimType = "name";
+    options.TokenValidationParameters.ValidateIssuer = true;
+    options.TokenValidationParameters.ValidIssuer = $"https://{builder.Configuration["Auth0:Domain"]}/";
 
     options.SaveTokens = true;
 });
@@ -50,6 +57,7 @@ builder.Services.AddScoped<ISiteSearchService, ExamineSiteSearchService>();
 
 WebApplication app = builder.Build();
 
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -68,6 +76,17 @@ app.UseUmbraco()
         u.UseBackOfficeEndpoints();
         u.UseWebsiteEndpoints();
     });
+
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+    context.Response.Headers.Append("X-Frame-Options", "DENY");
+    context.Response.Headers.Append("X-XSS-Protection", "1; mode=block");
+    await next();
+});
+
+
+app.UseHsts();
 
 
 await app.RunAsync();
