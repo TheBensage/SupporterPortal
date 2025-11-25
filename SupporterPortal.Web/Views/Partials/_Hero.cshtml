@@ -20,16 +20,17 @@
             @for (int i = 0; i < slides.Count; i++)
             {
                 HeroImageSlide? slide = slides[i];
+                bool hasDescription = !string.IsNullOrWhiteSpace(slide?.Description);
 
                 <div class="carousel-item @(i == 0 ? "active" : "")">
                     <div class="container-fluid pb-5 d-flex align-items-center">
                         <div class="row align-items-center">
 
                             <div class="col-12 ps-0 pe-2 col-md-6 text-start">
-                                <h1>@slide?.Title</h1>
-                                @if (!string.IsNullOrWhiteSpace(slide?.Description))
+                                <h1 class="@(hasDescription ? "" : "mb-4")">@slide?.Title</h1>
+                                @if (hasDescription)
                                 {
-                                    <p class="lead">@slide.Description</p>
+                                    <p class="lead">@slide?.Description</p>
                                 }
                                 @if (slide?.Cta != null)
                                 {
