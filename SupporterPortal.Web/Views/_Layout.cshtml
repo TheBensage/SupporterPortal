@@ -16,7 +16,7 @@
     @await Html.PartialAsync("_Meta", metaViewModel)
     <link rel="stylesheet" href="~/dist/css/main.css">
 </head>
-<body>
+<body class="bg-light">
     <header>
      @await Html.PartialAsync("_Navigation", navigationViewModel)
     </header>
@@ -26,8 +26,8 @@
         @await Html.PartialAsync("_NewsLetterForm", newsLetterFormViewModel)
     </main>
 
-    <footer class="bg-light text-center py-4 mt-5">
-        &copy; @DateTime.Now.Year
+    <footer class="bg-dark text-center text-light py-5">
+        <p class="mb-0">&copy; @siteSettings?.SiteTitle @DateTime.Now.Year</p>
     </footer>
 
     <script type="module" src="~/dist/js/main.js"></script>

@@ -2,7 +2,7 @@
 @model NewsLetterFormViewModel
 
 
-<section class="newsletter-section py-5">
+<section class="newsletter-section py-5" data-component="newsletter-form" data-error-text="@Model.ErrorText">
     <div class="row justify-content-center">
         <div class="col-md-10 col-lg-6">
             <div class="card shadow-sm border-0">
@@ -11,18 +11,18 @@
                     <h2 class="card-title mb-3 text-center">@Model.Title</h2>
                     <p class="card-text mb-4 text-center">@Model.Description</p>
 
-                    <form id="newsletterForm" data-component="newsletter-form" method="post" novalidate data-error-text="@Model.ErrorText">
+                    <form id="newsletterForm"  method="post" novalidate >
                         @Html.AntiForgeryToken()
 
                         <div id="newsletterFeedback" class="mb-3"></div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 js-form-field">
                             <label for="Name" class="form-label">@Model.NameLabel</label>
                             <input type="text" id="Name" placeholder="@Model.NamePlaceholder" name="Name" class="form-control form-control-lg" required>
                             <div class="invalid-feedback"></div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 js-form-field">
                             <label for="Email" class="form-label">@Model.EmailLabel</label>
                             <input type="email" id="Email" placeholder="@Model.EmailPlaceholder" name="Email" class="form-control form-control-lg" required>
                             <div class="invalid-feedback"></div>

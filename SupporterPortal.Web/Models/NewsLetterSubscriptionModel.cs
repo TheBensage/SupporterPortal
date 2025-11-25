@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SupporterPortal.Domain.Models;
+namespace SupporterPortal.Web.Models;
 
 public class NewsLetterSubscriptionModel : IValidatableObject
 {
@@ -38,14 +38,14 @@ public class NewsLetterSubscriptionModel : IValidatableObject
     }
 
     private static ValidationResult Error(string key, string member) =>
-        new ValidationResult(key, new[] { member });
+        new ValidationResult(key, [member]);
 
     private static bool HasNumbers(string value) =>
         value.Any(char.IsDigit);
 
     private static bool IsValidEmail(string email)
     {
-        var validator = new EmailAddressAttribute();
+        EmailAddressAttribute validator = new EmailAddressAttribute();
         return validator.IsValid(email);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SupporterPortal.Application.Models.Crm;
 using SupporterPortal.Application.Services;
-using SupporterPortal.Domain.Models;
+using SupporterPortal.Web.Models;
 using Umbraco.Cms.Web.Common;
 
 namespace SupporterPortal.Web.Controllers;

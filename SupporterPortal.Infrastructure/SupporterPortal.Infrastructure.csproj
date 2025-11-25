@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SupporterPortal.Application\SupporterPortal.Application.csproj" />
-    <ProjectReference Include="..\SupporterPortal.Domain\SupporterPortal.Domain.csproj" />
   </ItemGroup>
 
 </Project>

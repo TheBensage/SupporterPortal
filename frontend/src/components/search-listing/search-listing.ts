@@ -45,7 +45,7 @@ export default function SearchListing(el: HTMLElement) {
 
   const loadingIndicator = document.createElement("div");
   loadingIndicator.className =
-    "search-loading position-absolute top-50 start-50 translate-middle d-flex";
+    "search-loading position-absolute top-50 start-50 translate-middle mb-5";
   loadingIndicator.innerHTML = `
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>
@@ -98,7 +98,7 @@ export default function SearchListing(el: HTMLElement) {
           col.style.animationDelay = `${idx * 100}ms`;
 
           const card = document.createElement("div");
-          card.className = "card h-100 shadow border-0";
+          card.className = "card h-100 shadow-sm border-0";
 
           if (item.imageUrl) {
             const img = document.createElement("img");
