@@ -1,26 +1,29 @@
 ﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
+@using SupporterPortal.Web.ViewModels
+@using SupporterPortal.Web.ViewModels.Shared
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @{
     Layout = null;
     SiteSettings? siteSettings = Model.Root<ContentModels.SiteSettings>();
+    MetaViewModel metaViewModel = new (Model, siteSettings);
+    NavigationViewModel navigationViewModel = new (siteSettings);
+    NewsLetterFormViewModel newsLetterFormViewModel = new(siteSettings);
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @await Html.PartialAsync("_Meta", Model)
+    @await Html.PartialAsync("_Meta", metaViewModel)
     <link rel="stylesheet" href="~/dist/css/main.css">
 </head>
 <body>
     <header>
-    @if (siteSettings != null)
-    {
-        @await Html.PartialAsync("_Navigation", siteSettings)
-    }
+     @await Html.PartialAsync("_Navigation", navigationViewModel)
     </header>
 
     <main class="container">
         @RenderBody()
+        @await Html.PartialAsync("_NewsLetterForm", newsLetterFormViewModel)
     </main>
 
     <footer class="bg-light text-center py-4 mt-5">

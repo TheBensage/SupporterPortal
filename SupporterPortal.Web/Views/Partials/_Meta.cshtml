@@ -1,30 +1,15 @@
-﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>
+﻿@using SupporterPortal.Web.ViewModels
+@using SupporterPortal.Web.ViewModels.Shared
 
-@{
-    var page = Model as ContentModels.IBasePage;
+@model MetaViewModel
 
-    var siteSettings = Model.Root() as ContentModels.SiteSettings;
-
-    string siteTitle = siteSettings?.SiteTitle ?? "";
-    string pageTitle = page?.Title;
-    string metaTitle = !string.IsNullOrWhiteSpace(pageTitle) ? $"{siteTitle} - {pageTitle}" : siteTitle;
-
-    string metaDescription = !string.IsNullOrWhiteSpace(page?.Description)
-        ? page.Description
-        : siteSettings?.SiteDescription ?? "";
-
-    var metaImage = page?.Image ?? siteSettings?.SiteImage;
-    string metaImageUrl = metaImage?.GetCropUrl() ?? "";
-}
-
-<title>@metaTitle</title>
+<title>@Model.Title</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="@metaDescription" />
-<meta property="og:description" content="@metaDescription" />
-<meta property="og:title" content="@metaTitle" />
-<meta property="og:image" content="@metaImageUrl" />
-<meta name="twitter:image" content="@metaImageUrl" />
+<meta name="description" content="@Model.Description" />
+<meta property="og:description" content="@Model.Description" />
+<meta property="og:title" content="@Model.Title" />
+<meta property="og:image" content="@Model.ImageUrl" />
+<meta name="twitter:image" content="@Model.ImageUrl" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary_large_image" />

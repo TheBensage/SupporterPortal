@@ -32,14 +32,15 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		global::Umbraco.Cms.Core.Models.MediaWithCrops Image { get; }
 
-		/// <summary>Hide from results?</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
-		bool IsSearchHidden { get; }
-
 		/// <summary>Search Image</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		global::Umbraco.Cms.Core.Models.MediaWithCrops SearchImage { get; }
+
+		/// <summary>Search Link Text</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		string SearchLinkText { get; }
 
 		/// <summary>Search Summary</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
@@ -115,17 +116,6 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public static global::Umbraco.Cms.Core.Models.MediaWithCrops GetImage(IBasePage that, IPublishedValueFallback publishedValueFallback) => that.Value<global::Umbraco.Cms.Core.Models.MediaWithCrops>(publishedValueFallback, "image");
 
 		///<summary>
-		/// Hide from results?: Hide this page from search results
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
-		[ImplementPropertyType("isSearchHidden")]
-		public virtual bool IsSearchHidden => GetIsSearchHidden(this, _publishedValueFallback);
-
-		/// <summary>Static getter for Hide from results?</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
-		public static bool GetIsSearchHidden(IBasePage that, IPublishedValueFallback publishedValueFallback) => that.Value<bool>(publishedValueFallback, "isSearchHidden");
-
-		///<summary>
 		/// Search Image: The image to display for this page when used in a Search Listing component.  If no image is provided, the page image will be used
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
@@ -139,7 +129,20 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public static global::Umbraco.Cms.Core.Models.MediaWithCrops GetSearchImage(IBasePage that, IPublishedValueFallback publishedValueFallback) => that.Value<global::Umbraco.Cms.Core.Models.MediaWithCrops>(publishedValueFallback, "searchImage");
 
 		///<summary>
-		/// Search Summary: The search summary to display for this page when used in a Search Listing component.  If no value is provided, the page description will be used
+		/// Search Link Text: Text to appear for this card link button when viewed in Search Results.  This will default to the value in site settings ie "View more"
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("searchLinkText")]
+		public virtual string SearchLinkText => GetSearchLinkText(this, _publishedValueFallback);
+
+		/// <summary>Static getter for Search Link Text</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		public static string GetSearchLinkText(IBasePage that, IPublishedValueFallback publishedValueFallback) => that.Value<string>(publishedValueFallback, "searchLinkText");
+
+		///<summary>
+		/// Search Summary: The search summary to display for this page when used in a Search Listing component.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]

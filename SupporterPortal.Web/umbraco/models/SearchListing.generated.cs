@@ -58,11 +58,27 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual global::System.Collections.Generic.IEnumerable<string> ContentTypes => this.Value<global::System.Collections.Generic.IEnumerable<string>>(_publishedValueFallback, "contentTypes");
 
 		///<summary>
+		/// Description: Enter a description to appear below the title
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("description")]
+		public virtual string Description => this.Value<string>(_publishedValueFallback, "description");
+
+		///<summary>
 		/// Max Size: The maximum amount of results to return for this listing
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
 		[ImplementPropertyType("maxSize")]
 		public virtual int MaxSize => this.Value<int>(_publishedValueFallback, "maxSize");
+
+		///<summary>
+		/// No results Text: Text to display when there are no results in the search
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("noResultsText")]
+		public virtual string NoResultsText => this.Value<string>(_publishedValueFallback, "noResultsText");
 
 		///<summary>
 		/// Order By: Order results by selecting one of the below options.  The default order will be the search score

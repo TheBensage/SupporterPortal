@@ -1,43 +1,28 @@
 ﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>
+@using SupporterPortal.Web.ViewModels.Shared
+@model NewsLetterFormViewModel
 
-@{
-    SiteSettings? siteSettings = Model.Root() as ContentModels.SiteSettings;
-    ContentModels.NewsLetterForm? newsletterFormBlock = siteSettings?.SiteNewsletterForm?.Content as ContentModels.NewsLetterForm;
-    string formTitle = newsletterFormBlock?.Title ?? "Subscribe to our newsletter";
-    string formDescription = newsletterFormBlock?.Description ?? "Stay updated with our latest news";
-    string submitText = newsletterFormBlock?.SubmitText ?? "Subscribe";
-}
 
-@if (newsletterFormBlock != null)
-{
-    <form id="newsletterForm" data-component="newsletter-form" method="post" novalidate>
-        @Html.AntiForgeryToken()
+<form id="newsletterForm" data-component="newsletter-form" method="post" novalidate data-error-text="@Model.ErrorText">
+    @Html.AntiForgeryToken()
 
-        <div class="mb-3" id="newsletterFeedback"></div>
+    <div class="mb-3" id="newsletterFeedback"></div>
 
-        @if (!string.IsNullOrWhiteSpace(formTitle))
-        {
-            <h2>@formTitle</h2>
-        }
+    <h2>@Model.Title</h2>
 
-        @if (!string.IsNullOrWhiteSpace(formDescription))
-        {
-            <p>@formDescription</p>
-        }
+        <p>@Model.Description</p>
 
-        <div class="mb-3">
-            <label for="Name" class="form-label">Name</label>
-            <input type="text" id="Name" name="Name" class="form-control" required>
-            <div class="invalid-feedback"></div>
-        </div>
+    <div class="mb-3">
+        <label for="Name" class="form-label">@Model.NameLabel</label>
+        <input type="text" id="Name" placeholder="@Model.NamePlaceholder" name="Name" class="form-control" required>
+        <div class="invalid-feedback"></div>
+    </div>
 
-        <div class="mb-3">
-            <label for="Email" class="form-label">Email</label>
-            <input type="email" id="Email" name="Email" class="form-control" required>
-            <div class="invalid-feedback"></div>
-        </div>
+    <div class="mb-3">
+        <label for="Email" class="form-label">@Model.EmailLabel</label>
+        <input type="email" id="Email" placeholder="@Model.EmailPlaceholder" name="Email" class="form-control" required>
+        <div class="invalid-feedback"></div>
+    </div>
 
-        <button type="submit" class="btn btn-primary">@submitText</button>
-    </form>
-}
+    <button type="submit" class="btn btn-primary">@Model.SubmitText</button>
+</form>

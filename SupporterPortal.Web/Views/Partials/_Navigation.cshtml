@@ -1,6 +1,6 @@
 ﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
-@using Umbraco.Cms.Core.Models
-@model ContentModels.SiteSettings
+@using SupporterPortal.Web.ViewModels.Shared
+@model NavigationViewModel
 
 @if(Model.MainNavigationItems != null) {
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top" data-component="navigation">
@@ -13,7 +13,7 @@
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav ms-auto align-items-center">
 
-                    @foreach (Link? navItem in Model.MainNavigationItems)
+                    @foreach (LinkViewModel navItem in Model.MainNavigationItems)
                     {
                         string currentPath = ViewContext.HttpContext.Request.Path.Value?.ToLower() ?? string.Empty;
                         string? navSegment = navItem.Url?.TrimEnd('/').ToLower();
@@ -29,14 +29,14 @@
                     <li class="nav-item mx-2 mb-2">
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
-                            <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="/api/logout">
-                                Log out
+                            <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="@Model.LogoutLink.Url">
+								@Model.LoginLink.Name
                             </a>
                         }
                         else
                     {
-                        <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="/api/login">
-                            Log in
+                        <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="@Model.LoginLink.Url">
+								@Model.LoginLink.Name
                         </a>
                     }
                 </li>

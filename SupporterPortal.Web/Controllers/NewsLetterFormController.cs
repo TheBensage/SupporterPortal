@@ -16,6 +16,7 @@ public record NewsLetterFormResponse
 }
 
 [ApiController]
+[Route("api/newsletter")]
 public class NewsLetterFormController : Controller
 {
     private readonly ICrmService _crmService;
@@ -31,7 +32,7 @@ public class NewsLetterFormController : Controller
         _umbracoHelper = helper;
     }
 
-    [HttpPost("/api/subscribe")]
+    [HttpPost("subscribe")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Submit([FromForm] NewsLetterSubscriptionModel model)
     {

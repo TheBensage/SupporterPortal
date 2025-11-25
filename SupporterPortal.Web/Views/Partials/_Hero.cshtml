@@ -5,7 +5,7 @@
     var slides = Model?
         .Select(x => x.Content as ContentModels.HeroImageSlide)
         .Where(x => x != null)
-        .ToList() ?? new List<ContentModels.HeroImageSlide>();
+        .ToList() ?? [];
 
     if (!slides.Any()) return;
 
@@ -19,25 +19,25 @@
         <div class="carousel-inner pb-2">
             @for (int i = 0; i < slides.Count; i++)
             {
-                var slide = slides[i];
+                HeroImageSlide? slide = slides[i];
 
                 <div class="carousel-item @(i == 0 ? "active" : "")">
                     <div class="container-fluid pb-5 d-flex align-items-center">
                         <div class="row align-items-center">
 
                             <div class="col-12 ps-0 pe-2 col-md-6 text-start">
-                                <h1>@slide.Title</h1>
-                                @if (!string.IsNullOrWhiteSpace(slide.Description))
+                                <h1>@slide?.Title</h1>
+                                @if (!string.IsNullOrWhiteSpace(slide?.Description))
                                 {
                                     <p class="lead">@slide.Description</p>
                                 }
-                                @if (slide.Cta != null)
+                                @if (slide?.Cta != null)
                                 {
                                     <a href="@slide.Cta.Url" class="btn btn-primary btn-lg">@slide.Cta.Name</a>
                                 }
                             </div>
 
-                            @if (slide.BackgroundImage != null)
+                            @if (slide?.BackgroundImage != null)
                             {
                                 <div class="col-12 px-0 col-md-6 d-none d-md-block text-end">
                                     <img src="@slide.BackgroundImage.Url()" alt="@slide.Title" class="img-fluid rounded shadow-sm">

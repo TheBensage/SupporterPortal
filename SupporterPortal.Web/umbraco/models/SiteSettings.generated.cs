@@ -50,12 +50,36 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
+		/// Login Text: Text for the login button
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("loginText")]
+		public virtual string LoginText => this.Value<string>(_publishedValueFallback, "loginText");
+
+		///<summary>
+		/// Logout Text: Text for the logout button
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("logoutText")]
+		public virtual string LogoutText => this.Value<string>(_publishedValueFallback, "logoutText");
+
+		///<summary>
 		/// Main navigation Items: Select existing, or add external links to appear in themain navigation
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("mainNavigationItems")]
 		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.Link> MainNavigationItems => this.Value<global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.Link>>(_publishedValueFallback, "mainNavigationItems");
+
+		///<summary>
+		/// Search Default Link Text: Default Link text to appear for cards used in Search
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("searchDefaultLinkText")]
+		public virtual string SearchDefaultLinkText => this.Value<string>(_publishedValueFallback, "searchDefaultLinkText");
 
 		///<summary>
 		/// Site description: The description for this site as it appears in share links

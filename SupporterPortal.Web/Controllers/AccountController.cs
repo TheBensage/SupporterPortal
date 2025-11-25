@@ -4,19 +4,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SupporterPortal.Web.Controllers;
 
+[ApiController]
+[Route("api/account")]
 public class AccountController : Controller
 {
-    [HttpGet("/api/login")]
+    [HttpGet("login")]
     public IActionResult Login(string returnUrl = "/")
     {
         return Challenge(new AuthenticationProperties { RedirectUri = returnUrl }, "Auth0");
     }
 
-    [HttpGet("/api/logout")]
-    public IActionResult Logout()
+    [HttpGet("logout")]
+    public IActionResult Logout(string returnUrl = "/")
     {
         return SignOut(
-            new AuthenticationProperties { RedirectUri = "/" },
+            new AuthenticationProperties { RedirectUri = returnUrl },
             CookieAuthenticationDefaults.AuthenticationScheme,
             "Auth0");
     }

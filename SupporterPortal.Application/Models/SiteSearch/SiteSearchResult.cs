@@ -5,6 +5,9 @@ public record SiteSearchResult
     public required string Id { get; set; }
     public required string Title { get; set; }
     public string? Summary { get; set; }
+
+    public string? LinkText { get; set; }
+
     public required string Url { get; set; }
     public required string ContentType { get; set; }
 

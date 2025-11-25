@@ -1,6 +1,13 @@
+interface NewsletterFormResponse {
+  success: boolean;
+  message?: string;
+  errors?: Record<string, string[] | null>;
+}
+
 export default function NewsletterForm(el: HTMLElement) {
   const form = el as HTMLFormElement;
   const feedback = el.querySelector("#newsletterFeedback");
+  const errorText = el.dataset.errorText;
 
   if (!form || !feedback) return;
 
@@ -28,25 +35,27 @@ export default function NewsletterForm(el: HTMLElement) {
         body: formData,
       });
 
-      const data = await res.json();
+      const data = (await res.json()) as NewsletterFormResponse;
 
       if (data.success) {
         feedback.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
         form.reset();
         form.classList.remove("was-validated");
-      } else {
-        for (const key in data.errors) {
-          const input = form.querySelector(`[name="${key}"]`);
-          const span = input?.nextElementSibling;
-          if (input && span) {
+      } else if (data.errors) {
+        for (const key of Object.keys(data.errors)) {
+          const input = form.querySelector(
+            `[name="${key}"]`
+          ) as HTMLInputElement | null;
+          const span = input?.nextElementSibling as HTMLElement | null;
+          if (input && span && data.errors[key]) {
             input.classList.add("is-invalid");
-            span.textContent = data.errors[key].join(", ");
+            span.textContent = data.errors[key]!.join(", ");
           }
         }
       }
     } catch (err) {
       console.error(err);
-      feedback.innerHTML = `<div class="alert alert-danger">Error submitting form.</div>`;
+      feedback.innerHTML = `<div class="alert alert-danger">${errorText}</div>`;
     }
   });
 }

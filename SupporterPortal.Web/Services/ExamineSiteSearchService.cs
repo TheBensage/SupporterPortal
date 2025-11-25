@@ -72,12 +72,12 @@ public class ExamineSiteSearchService : ISiteSearchService
         List<SiteSearchResult> items = new();
 
         string? fallbackImageUrl = null;
-        var root = umbracoContext.Content?.GetAtRoot().FirstOrDefault();
-        if (root != null)
-        {
-            IPublishedContent? siteSettings = root.DescendantsOrSelf("siteSettings").FirstOrDefault();
-            fallbackImageUrl = siteSettings?.Value<IPublishedContent?>("siteImage")?.Url();
-        }
+        string fallBackLinkText = "View";
+
+        IPublishedContent? root = umbracoContext.Content?.GetAtRoot().FirstOrDefault();
+        IPublishedContent? siteSettings = root?.DescendantsOrSelf("siteSettings").FirstOrDefault();
+        fallbackImageUrl = siteSettings?.Value<IPublishedContent?>("siteImage")?.Url();
+        fallBackLinkText = siteSettings?.Value<string>("searchDefaultLinkText") ?? "View";
 
         foreach ((string id, float score) in pageMatches)
         {
@@ -95,6 +95,7 @@ public class ExamineSiteSearchService : ISiteSearchService
                 ContentType = content.ContentType.Alias,
                 Date = MapContentDate(content),
                 ImageUrl = content.Value<IPublishedContent?>("searchImage")?.Url() ?? fallbackImageUrl,
+                LinkText = GetFallbackString(content, "searchLinkText", fallBackLinkText),
                 Score = score
             });
         }

@@ -17,6 +17,7 @@
         .Where(typeMap.ContainsKey)
         .Select(x => typeMap[x])
         .ToArray();
+
     string? orderBy = Model.Content.Value<string?>("orderBy");
     int pageSize = Model.Content.Value<int>("pageSize") > 0
         ? Model.Content.Value<int>("pageSize")
@@ -25,18 +26,25 @@
     int maxSize = Model.Content.Value<int?>("maxSize") is int m && m > 0
         ? m
         : -1;
+    string noResultsText = Model.Content.Value<string?>("noResultsText") ?? "No Results";
+
+    string? description = Model.Content.Value<string?>("description");
 }
 
 <div class="site-search-block" 
-    data-component="search-listing"
-     data-search-term="@searchTerm"
-     data-content-types="@string.Join(",", contentTypes)"
-     data-page-size="@pageSize"
-     data-max-size="@maxSize"
-     data-order-by="@orderBy"
-    >
+data-component="search-listing"
+data-search-term="@searchTerm"
+data-content-types="@string.Join(",", contentTypes)"
+data-page-size="@pageSize"
+data-max-size="@maxSize"
+data-order-by="@orderBy"
+data-no-results-text="@noResultsText"
+>
     <h2>@blockTitle</h2>
-
+    @if(!string.IsNullOrWhiteSpace(description))
+    {
+        <p>@description</p>
+    }
     <div class="search-results-container">
     </div>
 </div>

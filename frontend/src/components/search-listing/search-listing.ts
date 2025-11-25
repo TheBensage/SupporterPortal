@@ -4,6 +4,7 @@ interface SiteSearchResult {
   id: string;
   title: string;
   summary: string;
+  linkText: string;
   url: string;
   contentType: string;
   imageUrl?: string;
@@ -14,6 +15,8 @@ interface SiteSearchResponse {
   totalCount: number;
   page: number;
   pageSize: number;
+  error: string | null;
+  message: string | null;
 }
 
 export default function SearchListing(el: HTMLElement) {
@@ -24,10 +27,10 @@ export default function SearchListing(el: HTMLElement) {
   const pageSize = parseInt(container.dataset.pageSize || "6");
   const orderBy = container.dataset.orderBy || "";
   const maxSize = parseInt(container.dataset.maxSize || "-1");
+  const noResultsText = container.dataset.noResultsText;
 
   let currentPage = 1;
 
-  // Wrapper for results and spinner
   const resultsWrapper = document.createElement("div");
   resultsWrapper.classList.add("position-relative", "d-flex", "flex-column");
   container.appendChild(resultsWrapper);
@@ -66,13 +69,24 @@ export default function SearchListing(el: HTMLElement) {
 
     try {
       const res = await fetch(`/api/search?${params}`);
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data: SiteSearchResponse = await res.json();
 
       resultsContainer.innerHTML = "";
 
+      if (!res.ok || data.error) {
+        const errorMsg = data.error || `HTTP error! status: ${res.status}`;
+        resultsContainer.innerHTML = `<div class="col-12"><p class="text-danger">${errorMsg}</p></div>`;
+        paginationContainer.innerHTML = "";
+        return;
+      }
+
       if (!data.results.length) {
-        resultsContainer.innerHTML = `<div class="col-12"><p>No results found.</p></div>`;
+        // Use API message first, then dataset fallback, then default
+        const msg =
+          data.message ||
+          noResultsText ||
+          `No results found for "${searchTerm}".`;
+        resultsContainer.innerHTML = `<div class="col-12"><p>${msg}</p></div>`;
       } else {
         const fragment = document.createDocumentFragment();
         data.results.forEach((item, idx) => {
@@ -94,7 +108,7 @@ export default function SearchListing(el: HTMLElement) {
           const body = document.createElement("div");
           body.className = "card-body";
 
-          const title = document.createElement("h5");
+          const title = document.createElement("h3");
           title.className = "card-title";
           title.textContent = item.title;
 
@@ -105,7 +119,7 @@ export default function SearchListing(el: HTMLElement) {
           const link = document.createElement("a");
           link.className = "btn btn-primary";
           link.href = item.url;
-          link.textContent = "Read more";
+          link.textContent = item.linkText;
 
           body.append(title, summary, link);
           card.appendChild(body);
@@ -117,9 +131,10 @@ export default function SearchListing(el: HTMLElement) {
       }
 
       renderPagination(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error loading search results:", err);
-      resultsContainer.innerHTML = `<div class="col-12"><p class="text-danger">Failed to load results.</p></div>`;
+      const msg = err?.message || "Failed to load results.";
+      resultsContainer.innerHTML = `<div class="col-12"><p class="text-danger">${msg}</p></div>`;
       paginationContainer.innerHTML = "";
     } finally {
       loadingIndicator.classList.add("d-none");

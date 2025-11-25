@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ViewModels\Components\" />
     <Folder Include="wwwroot\dist\" />
   </ItemGroup>
 

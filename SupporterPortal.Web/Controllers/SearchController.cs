@@ -2,8 +2,8 @@
 using SupporterPortal.Application.Models.SiteSearch;
 using SupporterPortal.Application.Services;
 
-[Route("api/search")]
 [ApiController]
+[Route("api/search")]
 public class SiteSearchController : Controller
 {
     private readonly ISiteSearchService _siteSearchService;

@@ -58,6 +58,46 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string Description => this.Value<string>(_publishedValueFallback, "description");
 
 		///<summary>
+		/// Email Label Text: Text to display for the email field
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("emailLabelText")]
+		public virtual string EmailLabelText => this.Value<string>(_publishedValueFallback, "emailLabelText");
+
+		///<summary>
+		/// Email placeholder: Placeholder text to display in the email field
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("emailPlaceholder")]
+		public virtual string EmailPlaceholder => this.Value<string>(_publishedValueFallback, "emailPlaceholder");
+
+		///<summary>
+		/// Error Text: Text to display when there is an error
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("errorText")]
+		public virtual string ErrorText => this.Value<string>(_publishedValueFallback, "errorText");
+
+		///<summary>
+		/// Name Label text: Label to display for the name field
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("nameLabelText")]
+		public virtual string NameLabelText => this.Value<string>(_publishedValueFallback, "nameLabelText");
+
+		///<summary>
+		/// Name Placeholder: Placeholder text to appear in the name field
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("namePlaceholder")]
+		public virtual string NamePlaceholder => this.Value<string>(_publishedValueFallback, "namePlaceholder");
+
+		///<summary>
 		/// Submit Text: Text for the submit button
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.12.0+7dcc730")]
