@@ -10,9 +10,9 @@ public class NavigationViewModel
         MainNavigationItems = siteSettings?.MainNavigationItems?
             .Select(LinkViewModel.FromUmbracoLink) ?? [];
 
-        LogoutLink = new LinkViewModel(siteSettings?.LogoutText ?? "Logout", "/api/logout");
+        LogoutLink = new LinkViewModel(siteSettings?.LogoutText ?? "Logout", "/api/account/logout");
 
-        LoginLink = new LinkViewModel(siteSettings?.LoginText ?? "Login", "/api/login");
+        LoginLink = new LinkViewModel(siteSettings?.LoginText ?? "Login", "/api/account/login");
 
     }
 

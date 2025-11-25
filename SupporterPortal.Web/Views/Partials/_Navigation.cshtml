@@ -1,5 +1,4 @@
-﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
-@using SupporterPortal.Web.ViewModels.Shared
+﻿@using SupporterPortal.Web.ViewModels.Shared
 @model NavigationViewModel
 
 @if(Model.MainNavigationItems != null) {
@@ -30,7 +29,7 @@
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
                             <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="@Model.LogoutLink.Url">
-								@Model.LoginLink.Name
+								@Model.LogoutLink.Name
                             </a>
                         }
                         else

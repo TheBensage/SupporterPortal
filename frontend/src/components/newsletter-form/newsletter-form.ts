@@ -30,7 +30,7 @@ export default function NewsletterForm(el: HTMLElement) {
     const formData = new FormData(form);
 
     try {
-      const res = await fetch("/api/subscribe", {
+      const res = await fetch("/api/newsletter/subscribe", {
         method: "POST",
         body: formData,
       });

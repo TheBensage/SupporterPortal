@@ -13,7 +13,7 @@
     string carouselId = "hero-carousel-" + Guid.NewGuid().ToString("N");
 }
 
-<div class="hero-component pb-2 mb-2" data-component="hero">
+<div class="hero-component pb-4 mb-4" data-component="hero">
     <div id="@carouselId" class="carousel slide carousel-dark" data-bs-ride="carousel" data-bs-interval="6000">
 
         <div class="carousel-inner pb-2">
@@ -40,7 +40,7 @@
                             @if (slide?.BackgroundImage != null)
                             {
                                 <div class="col-12 px-0 col-md-6 d-none d-md-block text-end">
-                                    <img src="@slide.BackgroundImage.Url()" alt="@slide.Title" class="img-fluid rounded shadow-sm">
+                                    <img src="@slide.BackgroundImage.Url()" alt="@slide.Title" class="img-fluid rounded shadow">
                                 </div>
                             }
 

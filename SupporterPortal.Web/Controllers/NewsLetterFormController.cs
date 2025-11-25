@@ -15,7 +15,6 @@ public record NewsLetterFormResponse
     public string? Message { get; set; }
 }
 
-[ApiController]
 [Route("api/newsletter")]
 public class NewsLetterFormController : Controller
 {

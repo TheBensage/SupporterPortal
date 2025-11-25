@@ -53,9 +53,11 @@ export default function SearchListing(el: HTMLElement) {
   `;
   resultsWrapper.appendChild(loadingIndicator);
 
+  let paginationList: HTMLUListElement | null = null;
+  let pageItems: HTMLLIElement[] = [];
+
   async function loadPage(page: number) {
     currentPage = page;
-
     loadingIndicator.classList.remove("d-none");
 
     const params = new URLSearchParams({
@@ -77,11 +79,12 @@ export default function SearchListing(el: HTMLElement) {
         const errorMsg = data.error || `HTTP error! status: ${res.status}`;
         resultsContainer.innerHTML = `<div class="col-12"><p class="text-danger">${errorMsg}</p></div>`;
         paginationContainer.innerHTML = "";
+        paginationList = null;
+        pageItems = [];
         return;
       }
 
       if (!data.results.length) {
-        // Use API message first, then dataset fallback, then default
         const msg =
           data.message ||
           noResultsText ||
@@ -95,7 +98,7 @@ export default function SearchListing(el: HTMLElement) {
           col.style.animationDelay = `${idx * 100}ms`;
 
           const card = document.createElement("div");
-          card.className = "card h-100 shadow-sm";
+          card.className = "card h-100 shadow border-0";
 
           if (item.imageUrl) {
             const img = document.createElement("img");
@@ -136,6 +139,8 @@ export default function SearchListing(el: HTMLElement) {
       const msg = err?.message || "Failed to load results.";
       resultsContainer.innerHTML = `<div class="col-12"><p class="text-danger">${msg}</p></div>`;
       paginationContainer.innerHTML = "";
+      paginationList = null;
+      pageItems = [];
     } finally {
       loadingIndicator.classList.add("d-none");
     }
@@ -143,30 +148,43 @@ export default function SearchListing(el: HTMLElement) {
 
   function renderPagination(data: SiteSearchResponse) {
     const totalPages = Math.ceil(data.totalCount / data.pageSize);
-    paginationContainer.innerHTML = "";
-    if (totalPages <= 1) return;
-
-    const ul = document.createElement("ul");
-    ul.className = "pagination";
-
-    for (let i = 1; i <= totalPages; i++) {
-      const li = document.createElement("li");
-      li.className = `page-item ${i === data.page ? "active" : ""}`;
-
-      const a = document.createElement("a");
-      a.className = "page-link";
-      a.href = "#";
-      a.textContent = i.toString();
-      a.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (i !== currentPage) loadPage(i);
-      });
-
-      li.appendChild(a);
-      ul.appendChild(li);
+    if (totalPages <= 1) {
+      paginationContainer.innerHTML = "";
+      paginationList = null;
+      pageItems = [];
+      return;
     }
 
-    paginationContainer.appendChild(ul);
+    if (!paginationList || pageItems.length !== totalPages) {
+      paginationContainer.innerHTML = "";
+      paginationList = document.createElement("ul");
+      paginationList.classList.add("pagination", "justify-content-center");
+      pageItems = [];
+
+      for (let i = 1; i <= totalPages; i++) {
+        const li = document.createElement("li");
+        li.className = `page-item ${i === currentPage ? "active" : ""}`;
+
+        const a = document.createElement("a");
+        a.className = "page-link";
+        a.href = "#";
+        a.textContent = i.toString();
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (i !== currentPage) loadPage(i);
+        });
+
+        li.appendChild(a);
+        paginationList.appendChild(li);
+        pageItems.push(li);
+      }
+
+      paginationContainer.appendChild(paginationList);
+    } else {
+      pageItems.forEach((li, idx) => {
+        li.classList.toggle("active", idx + 1 === currentPage);
+      });
+    }
   }
 
   loadPage(1);

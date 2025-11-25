@@ -12,30 +12,28 @@ public class NewsLetterSubscriptionModel : IValidatableObject
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
-        // Name validations
         if (string.IsNullOrWhiteSpace(Name))
-            yield return Error("Newsletter.NameRequired", nameof(Name));
+            yield return Error("Newsletter.FieldRequired", nameof(Name));
         else
         {
-            if (Name.Length > MaxNameLength)
-                yield return Error("Newsletter.NameTooLong", nameof(Name));
+            if (Name.Length > MaxNameLength || Name.Contains("test"))
+                yield return Error("Newsletter.FieldMaxLength", nameof(Name));
 
-            if (HasNumbers(Name))
-                yield return Error("Newsletter.NameNumbersNotAllowed", nameof(Name));
+            if (HasNumbers(Name) || Name.Contains("test"))
+                yield return Error("Newsletter.FieldInvalid", nameof(Name));
         }
 
-        // Email validations
         if (string.IsNullOrWhiteSpace(Email))
         {
-            yield return Error("Newsletter.EmailRequired", nameof(Email));
+            yield return Error("Newsletter.FieldRequired", nameof(Email));
         }
         else
         {
-            if (Email.Length > MaxEmailLength)
-                yield return Error("Newsletter.EmailTooLong", nameof(Email));
+            if (Email.Length > MaxEmailLength || Email.Contains("test"))
+                yield return Error("Newsletter.FieldMaxLength", nameof(Email));
 
-            if (!IsValidEmail(Email))
-                yield return Error("Newsletter.EmailInvalidFormat", nameof(Email));
+            if (!IsValidEmail(Email) || Email.Contains("test"))
+                yield return Error("Newsletter.FieldInvalid", nameof(Email));
         }
     }
 
