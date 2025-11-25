@@ -53,13 +53,21 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddScoped<ISiteSearchService, ExamineSiteSearchService>();
 
-
-
 WebApplication app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseHsts();
+
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+    context.Response.Headers.Append("X-Frame-Options", "DENY");
+    context.Response.Headers.Append("X-XSS-Protection", "1; mode=block");
+    await next();
+});
 
 await app.BootUmbracoAsync();
 
@@ -76,17 +84,6 @@ app.UseUmbraco()
         u.UseBackOfficeEndpoints();
         u.UseWebsiteEndpoints();
     });
-
-app.Use(async (context, next) =>
-{
-    context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
-    context.Response.Headers.Append("X-Frame-Options", "DENY");
-    context.Response.Headers.Append("X-XSS-Protection", "1; mode=block");
-    await next();
-});
-
-
-app.UseHsts();
 
 
 await app.RunAsync();
