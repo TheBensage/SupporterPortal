@@ -1,46 +1,47 @@
 ﻿@using SupporterPortal.Web.ViewModels.Shared
 @model NavigationViewModel
 
-@if(Model.MainNavigationItems != null) {
+@if (Model.MainNavigationItems != null)
+{
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top" data-component="navigation">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-4" href="/">@Model.SiteTitle</a>
-            <button class="navbar-toggler border-0 px-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand fw-bold fs-4 text-primary" href="/">@Model.SiteTitle</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                    aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav ms-auto align-items-center">
 
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
                     @foreach (LinkViewModel navItem in Model.MainNavigationItems)
                     {
                         string currentPath = ViewContext.HttpContext.Request.Path.Value?.ToLower() ?? string.Empty;
                         string? navSegment = navItem.Url?.TrimEnd('/').ToLower();
                         bool isActive = !string.IsNullOrEmpty(navSegment) && currentPath.Contains(navSegment);
 
-                        <li class="nav-item mx-2 mb-2 mb-lg-0">
-                            <a class="nav-link fw-medium px-3 py-2 rounded-hover  @(isActive ? "active" : "")" href="@navItem.Url">
+                        <li class="nav-item mx-0 mx-lg-2 mb-2 mb-lg-0">
+                            <a class="nav-link fw-medium px-lg-3 py-2 rounded-hover @(isActive ? "active" : "")" href="@navItem.Url">
                                 @navItem.Name
                             </a>
                         </li>
                     }
 
-                    <li class="nav-item mx-2 mb-2 mb-lg-0">
+                    <li class="nav-item mx-0 mx-lg-2 mb-2 mb-lg-0">
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
                             <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="@Model.LogoutLink.Url">
-								@Model.LogoutLink.Name
+                                @Model.LogoutLink.Name
                             </a>
                         }
                         else
-                    {
-                        <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="@Model.LoginLink.Url">
-								@Model.LoginLink.Name
-                        </a>
-                    }
-                </li>
-            </ul>
+                        {
+                            <a class="btn btn-primary fw-medium px-4 py-2 rounded" href="@Model.LoginLink.Url">
+                                @Model.LoginLink.Name
+                            </a>
+                        }
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 }

@@ -96,7 +96,7 @@ public class ExamineSiteSearchService : ISiteSearchService
                 Url = content.Url(),
                 ContentType = content.ContentType.Alias,
                 Date = MapContentDate(content),
-                ImageUrl = HttpUtility.HtmlEncode(content.Value<MediaWithCrops?>("searchImage")?.GetCropUrl(cropAlias: "card", useCropDimensions: true) ?? fallbackImageUrl),
+                ImageUrl = HttpUtility.HtmlEncode(content.Value<MediaWithCrops?>("searchImage")?.GetCropUrl("card") ?? fallbackImageUrl),
                 LinkText = GetFallbackString(content, "searchLinkText", fallBackLinkText),
                 Score = score
             });

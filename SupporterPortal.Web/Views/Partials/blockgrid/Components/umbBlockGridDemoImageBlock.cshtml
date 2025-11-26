@@ -5,7 +5,7 @@
     var typedMediaPickerSingle = Model.Content.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("image");
     if (typedMediaPickerSingle != null)
     {
-        <img class="img-fluid rounded shadow" src="@typedMediaPickerSingle.MediaUrl()" alt="@typedMediaPickerSingle.Name" />
+        <img class="img-fluid rounded shadow" src="@typedMediaPickerSingle?.GetCropUrl("card")" alt="@typedMediaPickerSingle?.Name" />
     } else {
         <p>Missing image</p>
     }
